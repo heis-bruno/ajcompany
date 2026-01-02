@@ -14,7 +14,194 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      email_reminder_logs: {
+        Row: {
+          email_type: string
+          error_message: string | null
+          id: string
+          loan_id: string | null
+          recipient_email: string
+          sent_at: string | null
+          status: string
+          subject: string
+        }
+        Insert: {
+          email_type: string
+          error_message?: string | null
+          id?: string
+          loan_id?: string | null
+          recipient_email: string
+          sent_at?: string | null
+          status?: string
+          subject: string
+        }
+        Update: {
+          email_type?: string
+          error_message?: string | null
+          id?: string
+          loan_id?: string | null
+          recipient_email?: string
+          sent_at?: string | null
+          status?: string
+          subject?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_reminder_logs_loan_id_fkey"
+            columns: ["loan_id"]
+            isOneToOne: false
+            referencedRelation: "loans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_settings: {
+        Row: {
+          created_at: string | null
+          from_email: string
+          from_name: string | null
+          id: string
+          max_overdue_reminders: number | null
+          reminder_days_before: number | null
+          smtp_host: string
+          smtp_password: string | null
+          smtp_port: number
+          smtp_username: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          from_email: string
+          from_name?: string | null
+          id?: string
+          max_overdue_reminders?: number | null
+          reminder_days_before?: number | null
+          smtp_host?: string
+          smtp_password?: string | null
+          smtp_port?: number
+          smtp_username?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          from_email?: string
+          from_name?: string | null
+          id?: string
+          max_overdue_reminders?: number | null
+          reminder_days_before?: number | null
+          smtp_host?: string
+          smtp_password?: string | null
+          smtp_port?: number
+          smtp_username?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      loans: {
+        Row: {
+          amount: number
+          borrower_email: string | null
+          borrower_name: string
+          borrower_phone: string | null
+          created_at: string | null
+          currency: string
+          due_date: string
+          id: string
+          interest_rate: number
+          interest_type: string
+          last_reminder_sent_at: string | null
+          late_fee: number | null
+          notes: string | null
+          payment_status: string
+          reminder_count: number | null
+          reminders_enabled: boolean | null
+          start_date: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          borrower_email?: string | null
+          borrower_name: string
+          borrower_phone?: string | null
+          created_at?: string | null
+          currency?: string
+          due_date: string
+          id?: string
+          interest_rate?: number
+          interest_type?: string
+          last_reminder_sent_at?: string | null
+          late_fee?: number | null
+          notes?: string | null
+          payment_status?: string
+          reminder_count?: number | null
+          reminders_enabled?: boolean | null
+          start_date?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          borrower_email?: string | null
+          borrower_name?: string
+          borrower_phone?: string | null
+          created_at?: string | null
+          currency?: string
+          due_date?: string
+          id?: string
+          interest_rate?: number
+          interest_type?: string
+          last_reminder_sent_at?: string | null
+          late_fee?: number | null
+          notes?: string | null
+          payment_status?: string
+          reminder_count?: number | null
+          reminders_enabled?: boolean | null
+          start_date?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      ticket_records: {
+        Row: {
+          buyer_name: string
+          created_at: string | null
+          currency: string
+          id: string
+          money_paid: number
+          service_fee: number
+          ticket_number: string | null
+          total_amount: number | null
+          updated_at: string | null
+          visa_destination: string | null
+        }
+        Insert: {
+          buyer_name: string
+          created_at?: string | null
+          currency?: string
+          id?: string
+          money_paid?: number
+          service_fee?: number
+          ticket_number?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          visa_destination?: string | null
+        }
+        Update: {
+          buyer_name?: string
+          created_at?: string | null
+          currency?: string
+          id?: string
+          money_paid?: number
+          service_fee?: number
+          ticket_number?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          visa_destination?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
