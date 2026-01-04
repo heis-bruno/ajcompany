@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_devices: {
+        Row: {
+          admin_id: string
+          created_at: string | null
+          device_name: string | null
+          device_type: string | null
+          fcm_token: string
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          admin_id: string
+          created_at?: string | null
+          device_name?: string | null
+          device_type?: string | null
+          fcm_token: string
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          admin_id?: string
+          created_at?: string | null
+          device_name?: string | null
+          device_type?: string | null
+          fcm_token?: string
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      clients: {
+        Row: {
+          created_at: string | null
+          email: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email?: string | null
+          full_name: string
+          id?: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       email_reminder_logs: {
         Row: {
           email_type: string
@@ -163,6 +220,107 @@ export type Database = {
         }
         Relationships: []
       }
+      notification_logs: {
+        Row: {
+          body: string
+          device_id: string | null
+          error_message: string | null
+          id: string
+          notification_type: string
+          payment_id: string | null
+          sent_at: string | null
+          status: string | null
+          title: string
+        }
+        Insert: {
+          body: string
+          device_id?: string | null
+          error_message?: string | null
+          id?: string
+          notification_type: string
+          payment_id?: string | null
+          sent_at?: string | null
+          status?: string | null
+          title: string
+        }
+        Update: {
+          body?: string
+          device_id?: string | null
+          error_message?: string | null
+          id?: string
+          notification_type?: string
+          payment_id?: string | null
+          sent_at?: string | null
+          status?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notification_logs_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "admin_devices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notification_logs_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          client_id: string
+          created_at: string | null
+          currency: string | null
+          due_date: string
+          id: string
+          last_notification_sent_at: string | null
+          notes: string | null
+          reminder_count: number | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          client_id: string
+          created_at?: string | null
+          currency?: string | null
+          due_date: string
+          id?: string
+          last_notification_sent_at?: string | null
+          notes?: string | null
+          reminder_count?: number | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          client_id?: string
+          created_at?: string | null
+          currency?: string | null
+          due_date?: string
+          id?: string
+          last_notification_sent_at?: string | null
+          notes?: string | null
+          reminder_count?: number | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ticket_records: {
         Row: {
           buyer_name: string
@@ -202,15 +360,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -337,6 +522,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "moderator", "user"],
+    },
   },
 } as const
