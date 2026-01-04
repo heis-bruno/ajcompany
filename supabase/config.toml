@@ -1,1 +1,7 @@
 project_id = "ingrskqhezikwmhzqfls"
+
+[functions.send-payment-reminders]
+verify_jwt = false
+
+[functions.send-payment-notifications]
+verify_jwt = false
