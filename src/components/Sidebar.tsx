@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   Building2,
+  Shield,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -21,6 +22,7 @@ const navItems = [
   { path: '/loans', label: 'Loans', icon: CreditCard },
   { path: '/tickets', label: 'Ticket / Visa', icon: Plane },
   { path: '/reports', label: 'Reports', icon: BarChart3 },
+  { path: '/admin', label: 'Admin Panel', icon: Shield },
 ];
 
 export function Sidebar() {
